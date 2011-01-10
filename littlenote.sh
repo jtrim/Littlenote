@@ -1,6 +1,6 @@
 function __print_littlenote_usage() {
   echo ""
-  echo "Record a datetime-stamped message to a notes file in /Users/<your-username>/Documents/nnotes.txt"
+  echo "Littlenote: Record a datetime-stamped message to a notes file in /Users/<your-username>/Documents/nnotes.txt"
   echo ""
   echo "Usage: n [-h|--help] [-n <lines-of-scrollback>] <message-to-record>"
   echo ""
