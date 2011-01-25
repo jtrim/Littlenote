@@ -1,9 +1,27 @@
 function __print_littlenote_usage() {
+  __print_littlenote_usage_header
+  __print_littlenote_usage_diagram
+  __print_littlenote_examples
+}
+
+function __print_littlenote_usage_header() {
   echo ""
   echo "Littlenote: Record a datetime-stamped message to a notes file in /Users/<your-username>/Documents/nnotes.txt"
   echo ""
-  echo "Usage: n [-h|--help] [-n <lines-of-scrollback>] <message-to-record>"
+}
+
+function __print_littlenote_usage_diagram() {
+  echo -n "Usage: n [-h|--help] [-n <lines-of-scrollback>] "
+
+  if [ -e /usr/bin/pbcopy ]; then
+    echo -n "[-c|--copy-to-clipboard] "
+  fi
+
+  echo "<message-to-record>"
   echo ""
+}
+
+function __print_littlenote_examples() {
   echo "Examples:"
   echo ""
   echo "  Record a new note:"
@@ -15,8 +33,15 @@ function __print_littlenote_usage() {
   echo "  List the last 40 notes:"
   echo "    n -n 40"
   echo ""
+  if [ -e /usr/bin/pbcopy ]; then
+    echo "  Copy the last note to your clipboard:"
+    echo "    n -c"
+    echo ""
+  fi
 }
 
+
+# Littlenote.
 function n() {
   NOTE_PATH="/Users/$USER/Documents/nnotes.txt"
   DATE=`date '+%m/%d/%Y %I:%M:%S %p - '`
@@ -24,6 +49,7 @@ function n() {
   # n (call with no args)
   if [ "${1}" = "" ]; then
     tail -n 10 $NOTE_PATH
+
 
   # n --help or n -h
   elif [[ "${1}" =~ ^-h ]] || [[ "${1}" =~ ^--help ]]; then
