@@ -18,7 +18,7 @@ function __print_littlenote_usage() {
 }
 
 function __ensure_littlenotes_file() {
-  export LITTLENOTE_FILENAME=littlenotes.txt
+  LITTLENOTE_FILENAME=littlenotes.txt
 
   if [[ -e $HOME/Dropbox ]]; then
     export LITTLENOTE_NOTE_PATH=$HOME/Dropbox/$LITTLENOTE_FILENAME
