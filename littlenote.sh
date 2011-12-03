@@ -1,22 +1,3 @@
-function __print_littlenote_usage() {
-  echo ""
-  echo "Littlenote: Record a datetime-stamped message to a notes file in /Users/<your-username>/Documents/nnotes.txt"
-  echo ""
-  echo "Usage: n [-h|--help] [-n <lines-of-scrollback>] <message-to-record>"
-  echo ""
-  echo "Examples:"
-  echo ""
-  echo "  Record a new note:"
-  echo "    n \"My new note\""
-  echo ""
-  echo "  List the last ten notes:"
-  echo "    n"
-  echo ""
-  echo "  List the last 40 notes:"
-  echo "    n -n 40"
-  echo ""
-}
-
 function __ensure_littlenotes_file() {
   LITTLENOTE_FILENAME=littlenotes.txt
 
@@ -31,6 +12,31 @@ function __ensure_littlenotes_file() {
       touch $LITTLENOTE_NOTE_PATH
     fi
   fi
+}
+
+function __print_littlenote_usage() {
+  __ensure_littlenotes_file
+
+  cat <<-README
+
+Littlenote: Record a datetime-stamped message to a notes file
+
+  Current file path: ${LITTLENOTE_NOTE_PATH}
+
+Usage: n [-h|--help] [-n <lines-of-scrollback>] <message-to-record>
+
+Examples:
+
+  Record a new note:
+    n "My new note"
+
+  List the last ten notes:
+    n
+
+  List the last 40 notes:
+    n -n 40
+
+README
 }
 
 function n() {
