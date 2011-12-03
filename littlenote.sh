@@ -17,13 +17,30 @@ function __print_littlenote_usage() {
   echo ""
 }
 
+function __ensure_littlenotes_file() {
+  export LITTLENOTE_FILENAME=littlenotes.txt
+
+  if [[ -e $HOME/Dropbox ]]; then
+    export LITTLENOTE_NOTE_PATH=$HOME/Dropbox/$LITTLENOTE_FILENAME
+    if [[ ! -e $LITTLENOTE_NOTE_PATH ]]; then
+      touch $LITTLENOTE_NOTE_PATH
+    fi
+  else
+    export LITTLENOTE_NOTE_PATH=$HOME/$LITTLENOTE_FILENAME
+    if [[ ! -e $LITTLENOTE_NOTE_PATH ]]; then
+      touch $LITTLENOTE_NOTE_PATH
+    fi
+  fi
+}
+
 function n() {
-  NOTE_PATH="/Users/$USER/Documents/nnotes.txt"
+  __ensure_littlenotes_file
+
   DATE=`date '+%m/%d/%Y %I:%M:%S %p - '`
 
   # n (call with no args)
   if [ "${1}" = "" ]; then
-    tail -n 10 $NOTE_PATH
+    tail -n 10 $LITTLENOTE_NOTE_PATH
 
   # n --help or n -h
   elif [[ "${1}" =~ ^-h ]] || [[ "${1}" =~ ^--help ]]; then
@@ -31,7 +48,7 @@ function n() {
 
   # n -n 30 (30 gets passed on to the -n option of tail)
   elif [[ "${1}" =~ ^-n ]] && [ "${1}" != "" ]; then
-    tail -n $2 $NOTE_PATH
+    tail -n $2 $LITTLENOTE_NOTE_PATH
 
   # n --some-option-that-doesnt-exist
   elif [[ "${1}" =~ ^- ]]; then
@@ -39,11 +56,12 @@ function n() {
 
   # n "some note to record"
   else
-    if [ ! -f $NOTE_PATH ]
+    if [ ! -f $LITTLENOTE_NOTE_PATH ]
     then
-      touch $NOTE_PATH
+      touch $LITTLENOTE_NOTE_PATH
     fi
 
-    echo $DATE $1 >> $NOTE_PATH
+    echo $DATE $1 >> $LITTLENOTE_NOTE_PATH
   fi
+
 }
