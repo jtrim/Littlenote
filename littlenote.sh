@@ -3,14 +3,12 @@ function __ensure_littlenotes_file() {
 
   if [[ -e $HOME/Dropbox ]]; then
     export LITTLENOTE_NOTE_PATH=$HOME/Dropbox/$LITTLENOTE_FILENAME
-    if [[ ! -e $LITTLENOTE_NOTE_PATH ]]; then
-      touch $LITTLENOTE_NOTE_PATH
-    fi
   else
     export LITTLENOTE_NOTE_PATH=$HOME/$LITTLENOTE_FILENAME
-    if [[ ! -e $LITTLENOTE_NOTE_PATH ]]; then
-      touch $LITTLENOTE_NOTE_PATH
-    fi
+  fi
+
+  if [[ ! -e $LITTLENOTE_NOTE_PATH ]]; then
+    touch $LITTLENOTE_NOTE_PATH
   fi
 }
 
