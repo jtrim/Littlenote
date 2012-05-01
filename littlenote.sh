@@ -21,7 +21,7 @@ Littlenote: Record a datetime-stamped message to a notes file
 
   Current file path: ${LITTLENOTE_NOTE_PATH}
 
-Usage: n [-h|--help] [-n <lines-of-scrollback>] <message-to-record>
+Usage: n [show] [-h|--help] [-n <lines-of-scrollback>] <message-to-record>
 
 Examples:
 
@@ -33,6 +33,9 @@ Examples:
 
   List the last 40 notes:
     n -n 40
+
+  Show the location of the notes file:
+    n show
 
 README
 }
@@ -49,6 +52,10 @@ function n() {
   # n --help or n -h
   elif [[ "${1}" =~ ^-h ]] || [[ "${1}" =~ ^--help ]]; then
     __print_littlenote_usage
+
+  # n show
+  elif [[ "${1}" == show ]]; then
+    echo $LITTLENOTE_NOTE_PATH
 
   # n -n 30 (30 gets passed on to the -n option of tail)
   elif [[ "${1}" =~ ^-n ]] && [ "${1}" != "" ]; then
