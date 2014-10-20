@@ -3,6 +3,8 @@ function __ensure_littlenotes_file() {
 
   if [[ -e $HOME/Dropbox ]]; then
     export LITTLENOTE_NOTE_PATH=$HOME/Dropbox/$LITTLENOTE_FILENAME
+  elif [[ -e $HOME/Dropbox\ \(Personal\) ]]; then
+    export LITTLENOTE_NOTE_PATH=$HOME/Dropbox\ \(Personal\)/$LITTLENOTE_FILENAME
   else
     export LITTLENOTE_NOTE_PATH=$HOME/$LITTLENOTE_FILENAME
   fi
