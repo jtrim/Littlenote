@@ -40,10 +40,30 @@ Examples:
 README
 }
 
+function __amend_last_note() {
+  TMP_FILEPATH="/tmp/littlenote-amend-$(date +%s).txt"
+  echo "Amending $(tail -n 1 $LITTLENOTE_NOTE_PATH)"
+
+  tail -q -n1 $LITTLENOTE_NOTE_PATH > $TMP_FILEPATH
+
+  $EDITOR $TMP_FILEPATH
+
+  __pop_last_note
+
+  cat $TMP_FILEPATH >> $LITTLENOTE_NOTE_PATH
+
+  rm $TMP_FILEPATH
+}
+
+function __pop_last_note() {
+  LITTLENOTES=$(cat $LITTLENOTE_NOTE_PATH)
+  echo $LITTLENOTES | sed '$ d' > $LITTLENOTE_NOTE_PATH
+}
+
 function n() {
   __ensure_littlenotes_file
 
-  DATE=`date '+%m/%d/%Y %I:%M:%S %p - '`
+  DATE=`date '+%m/%d/%Y %I:%M:%S %p -'`
 
   # n (call with no args)
   if [ "${1}" = "" ]; then
@@ -52,6 +72,14 @@ function n() {
   # n --help or n -h
   elif [[ "${1}" =~ ^-h ]] || [[ "${1}" =~ ^--help ]]; then
     __print_littlenote_usage
+
+  # n --amend
+  elif [[ "${1}" =~ --amend ]]; then
+    __amend_last_note
+
+  # n --pop
+  elif [[ "${1}" =~ --pop ]]; then
+    __pop_last_note
 
   # n show
   elif [[ "${1}" == show ]]; then
