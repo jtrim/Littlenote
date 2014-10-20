@@ -55,6 +55,8 @@ function __amend_last_note() {
   cat $TMP_FILEPATH >> $LITTLENOTE_NOTE_PATH
 
   rm $TMP_FILEPATH
+
+  n
 }
 
 function __pop_last_note() {
