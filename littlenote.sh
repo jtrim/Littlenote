@@ -64,6 +64,10 @@ function __pop_last_note() {
   echo $LITTLENOTES | sed '$ d' > $LITTLENOTE_NOTE_PATH
 }
 
+function __edit_notes() {
+  $EDITOR $LITTLENOTE_NOTE_PATH
+}
+
 function n() {
   __ensure_littlenotes_file
 
@@ -84,6 +88,10 @@ function n() {
   # n --pop
   elif [[ "${1}" =~ --pop ]]; then
     __pop_last_note
+
+  # n --edit
+  elif [[ "${1}" =~ --edit ]]; then
+    __edit_notes
 
   # n show
   elif [[ "${1}" == show ]]; then
