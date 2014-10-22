@@ -68,6 +68,10 @@ function __edit_notes() {
   $EDITOR $LITTLENOTE_NOTE_PATH
 }
 
+function __insert_divider_into_notes() {
+  n "##############################################"
+}
+
 function n() {
   __ensure_littlenotes_file
 
@@ -92,6 +96,10 @@ function n() {
   # n --edit
   elif [[ "${1}" =~ --edit ]]; then
     __edit_notes
+
+  # n --div
+  elif [[ "${1}" =~ --div ]]; then
+    __insert_divider_into_notes
 
   # n show
   elif [[ "${1}" == show ]]; then
