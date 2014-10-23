@@ -72,6 +72,14 @@ function __insert_divider_into_notes() {
   n "##############################################"
 }
 
+function __show_all_notes() {
+  cat $LITTLENOTE_NOTE_PATH
+}
+
+function __littlenotes_for_date() {
+  n --all | grep "^$1"
+}
+
 function n() {
   __ensure_littlenotes_file
 
@@ -85,6 +93,10 @@ function n() {
   elif [[ "${1}" =~ ^-h ]] || [[ "${1}" =~ ^--help ]]; then
     __print_littlenote_usage
 
+  # n --all
+  elif [[ "${1}" =~ --all ]]; then
+    __show_all_notes
+
   # n --amend
   elif [[ "${1}" =~ --amend ]]; then
     __amend_last_note
@@ -96,6 +108,10 @@ function n() {
   # n --edit
   elif [[ "${1}" =~ --edit ]]; then
     __edit_notes
+
+  # n -d 10/21
+  elif [[ "${1}" =~ -d ]]; then
+   __littlenotes_for_date $2
 
   # n --div
   elif [[ "${1}" =~ --div ]]; then
